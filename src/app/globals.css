@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+@import "tailwindcss";
+
+:root {
+  --bg: #07091a;
+  --bg-card: #0c1225;
+  --bg-card2: #101830;
+  --border: #1a2640;
+  --border-light: #243050;
+  --accent: #c8ff00;
+  --accent-hover: #b0e000;
+  --text: #ffffff;
+  --text-muted: #6b7fa3;
+  --text-dim: #2e3f5e;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 2px; }
