@@ -14,7 +14,6 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 html, body { height: 100%; }
 
 body {
@@ -27,3 +26,104 @@ body {
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 2px; }
+
+/* ── Responsive utilities ── */
+
+/* Hide/show by breakpoint */
+.hide-mobile { display: block; }
+.show-mobile { display: none; }
+
+/* Auth split layout */
+.auth-wrap { display: flex; min-height: 100vh; }
+.auth-left  { flex: 1; display: flex; flex-direction: column; }
+.auth-right { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 48px 24px; }
+
+/* Landing nav */
+.nav-links { display: flex; align-items: center; gap: 32px; }
+
+/* Grids */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.grid-stats { display: flex; }
+
+/* Workspace */
+.workspace-wrap { display: flex; height: 100%; overflow: hidden; }
+.workspace-main { flex: 1; overflow-y: auto; padding: 48px 60px; }
+.workspace-preview { width: 280px; border-left: 1px solid var(--border); overflow-y: auto; padding: 24px 20px; flex-shrink: 0; background: #060918; }
+.sidebar-wrap { width: 220px; height: 100vh; background: #060918; border-right: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; }
+
+/* Mobile bottom nav (workspace) */
+.mobile-bottom-nav { display: none; }
+
+/* Gates row */
+.gates-row { display: grid; grid-template-columns: 80px 1fr auto; align-items: center; gap: 32px; }
+
+/* Personality grid (sliders + archetype) */
+.personality-grid { display: grid; grid-template-columns: 1fr 300px; gap: 32px; }
+
+/* Steps grid */
+.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+/* Ecosystem grid */
+.eco-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+/* Testimonials */
+.testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+/* Generating steps */
+.gen-steps { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 480px; }
+
+/* Onboarding slider/archetype */
+.onboard-personality { display: grid; grid-template-columns: 1fr 340px; gap: 32px; }
+.onboard-logo-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+@media (max-width: 768px) {
+
+  /* Hide desktop-only panels */
+  .hide-mobile { display: none !important; }
+  .show-mobile { display: flex !important; }
+
+  /* Auth */
+  .auth-left  { display: none !important; }
+  .auth-right { padding: 32px 20px; }
+
+  /* Nav */
+  .nav-links { display: none !important; }
+
+  /* Grids → single column */
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-4 { grid-template-columns: 1fr 1fr; }
+  .grid-stats { flex-direction: column; }
+
+  /* Workspace: stack vertically, hide right preview */
+  .workspace-wrap  { flex-direction: column; height: auto; overflow: visible; }
+  .workspace-main  { padding: 24px 16px; overflow-y: visible; }
+  .workspace-preview { display: none !important; }
+  .sidebar-wrap    { display: none !important; }
+
+  /* Mobile bottom nav */
+  .mobile-bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: #060918; border-top: 1px solid var(--border); z-index: 50; justify-content: space-around; padding: 10px 0 max(10px, env(safe-area-inset-bottom)); }
+
+  /* Gates */
+  .gates-row { grid-template-columns: 40px 1fr; gap: 16px; }
+  .gates-row .gates-tags { display: none; }
+
+  /* Personality */
+  .personality-grid { grid-template-columns: 1fr; }
+  .onboard-personality { grid-template-columns: 1fr; }
+  .onboard-logo-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+
+  /* Steps / eco / testi */
+  .steps-grid  { grid-template-columns: 1fr; }
+  .eco-grid    { grid-template-columns: 1fr 1fr; }
+  .testi-grid  { grid-template-columns: 1fr; }
+
+  /* Generating */
+  .gen-steps { max-width: 100%; }
+
+  /* Typography scale-down */
+  .hero-title { font-size: clamp(36px, 10vw, 60px) !important; }
+  .section-title { font-size: clamp(28px, 7vw, 44px) !important; }
+}

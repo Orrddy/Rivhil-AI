@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useState } from "react";
 import Logo from "@/components/Logo";
 
 const STATS = [
@@ -39,6 +40,8 @@ const TESTIMONIALS = [
 ];
 
 export default function LandingPage() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--text)" }}>
 
@@ -46,119 +49,127 @@ export default function LandingPage() {
       <nav style={{
         position: "sticky", top: 0, zIndex: 50,
         display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "18px 60px",
-        background: "rgba(7,9,26,0.85)", backdropFilter: "blur(12px)",
+        padding: "16px 24px",
+        background: "rgba(7,9,26,0.92)", backdropFilter: "blur(12px)",
         borderBottom: "1px solid var(--border)",
       }}>
         <Logo />
-        <div style={{ display: "flex", alignItems: "center", gap: 32 }}>
-          {["Features", "Pricing", "Examples", "Blog"].map(l => (
-            <a key={l} href="#" style={{ fontSize: 14, color: "var(--text-muted)", textDecoration: "none", transition: "color 0.2s" }}
-              onMouseOver={e => ((e.target as HTMLElement).style.color = "var(--text)")}
-              onMouseOut={e => ((e.target as HTMLElement).style.color = "var(--text-muted)")}
-            >{l}</a>
+        <div className="nav-links">
+          {["Features", "Pricing", "Examples"].map(l => (
+            <a key={l} href="#" style={{ fontSize: 14, color: "var(--text-muted)", textDecoration: "none" }}>{l}</a>
           ))}
         </div>
-        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          <Link href="/login" style={{ fontSize: 14, color: "var(--text-muted)", textDecoration: "none", fontWeight: 500 }}>Sign in</Link>
+        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+          <Link href="/login" className="hide-mobile" style={{ fontSize: 14, color: "var(--text-muted)", textDecoration: "none", fontWeight: 500 }}>Sign in</Link>
           <Link href="/signup" style={{
             background: "var(--accent)", color: "#000", fontWeight: 700,
-            fontSize: 14, padding: "9px 20px", borderRadius: 8, textDecoration: "none",
-          }}>Start for free →</Link>
+            fontSize: 13, padding: "9px 18px", borderRadius: 8, textDecoration: "none", whiteSpace: "nowrap",
+          }}>Start free →</Link>
+          {/* Hamburger */}
+          <button className="show-mobile" onClick={() => setMenuOpen(!menuOpen)} style={{
+            background: "none", border: "none", cursor: "pointer", color: "var(--text)", fontSize: 22, padding: 4,
+          }}>☰</button>
         </div>
       </nav>
 
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div style={{
+          position: "fixed", inset: 0, zIndex: 40,
+          background: "var(--bg)", display: "flex", flexDirection: "column",
+          alignItems: "center", justifyContent: "center", gap: 32,
+        }}>
+          <button onClick={() => setMenuOpen(false)} style={{ position: "absolute", top: 20, right: 24, background: "none", border: "none", color: "var(--text)", fontSize: 28, cursor: "pointer" }}>✕</button>
+          {["Features", "Pricing", "Examples"].map(l => (
+            <a key={l} href="#" onClick={() => setMenuOpen(false)} style={{ fontSize: 24, fontFamily: "Syne, sans-serif", fontWeight: 800, color: "var(--text)", textDecoration: "none" }}>{l}</a>
+          ))}
+          <Link href="/login" onClick={() => setMenuOpen(false)} style={{ fontSize: 18, color: "var(--text-muted)", textDecoration: "none" }}>Sign in</Link>
+          <Link href="/signup" onClick={() => setMenuOpen(false)} style={{
+            background: "var(--accent)", color: "#000", fontWeight: 700,
+            fontSize: 16, padding: "14px 36px", borderRadius: 10, textDecoration: "none",
+          }}>Start Building Free →</Link>
+        </div>
+      )}
+
       {/* Hero */}
-      <section style={{ textAlign: "center", padding: "120px 24px 80px", position: "relative", overflow: "hidden" }}>
-        {/* Glow */}
+      <section style={{ textAlign: "center", padding: "80px 20px 60px", position: "relative", overflow: "hidden" }}>
         <div style={{
           position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)",
-          width: 700, height: 400,
+          width: 600, height: 400,
           background: "radial-gradient(ellipse, rgba(200,255,0,0.06) 0%, transparent 70%)",
           pointerEvents: "none",
         }} />
         <div style={{
-          display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 28,
+          display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 24,
           background: "rgba(200,255,0,0.08)", border: "1px solid rgba(200,255,0,0.2)",
-          borderRadius: 100, padding: "6px 16px",
+          borderRadius: 100, padding: "6px 14px",
         }}>
           <div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)" }} />
-          <span style={{ fontSize: 12, fontWeight: 600, color: "var(--accent)", letterSpacing: "0.05em" }}>AI BRAND GENERATION · NOW LIVE</span>
+          <span style={{ fontSize: 11, fontWeight: 600, color: "var(--accent)", letterSpacing: "0.05em" }}>AI BRAND GENERATION · NOW LIVE</span>
         </div>
-        <h1 style={{
+        <h1 className="hero-title" style={{
           fontFamily: "Syne, sans-serif", fontWeight: 800,
-          fontSize: "clamp(48px, 8vw, 88px)", lineHeight: 1.0,
-          marginBottom: 28, letterSpacing: "-0.02em",
+          fontSize: "clamp(44px, 9vw, 88px)", lineHeight: 1.0,
+          marginBottom: 24, letterSpacing: "-0.02em",
         }}>
           Start with<br />
           <span style={{ color: "var(--accent)" }}>your brand!</span>
         </h1>
-        <p style={{ fontSize: 18, color: "var(--text-muted)", maxWidth: 520, margin: "0 auto 48px", lineHeight: 1.7 }}>
-          The only AI platform that builds your complete brand strategy, identity, and launch assets — all connected, all in one place.
+        <p style={{ fontSize: "clamp(15px, 3vw, 18px)", color: "var(--text-muted)", maxWidth: 480, margin: "0 auto 40px", lineHeight: 1.7 }}>
+          The only AI platform that builds your complete brand strategy, identity, and launch assets — all connected.
         </p>
-        <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
           <Link href="/signup" style={{
             background: "var(--accent)", color: "#000", fontWeight: 700,
-            fontSize: 16, padding: "16px 36px", borderRadius: 10, textDecoration: "none",
-            display: "inline-flex", alignItems: "center", gap: 8,
+            fontSize: "clamp(14px, 3vw, 16px)", padding: "14px 32px", borderRadius: 10, textDecoration: "none",
           }}>Build My Brand Free →</Link>
           <a href="#how" style={{
             background: "var(--bg-card2)", border: "1px solid var(--border)",
-            color: "var(--text)", fontWeight: 500, fontSize: 16,
-            padding: "16px 32px", borderRadius: 10, textDecoration: "none",
+            color: "var(--text)", fontWeight: 500,
+            fontSize: "clamp(14px, 3vw, 16px)", padding: "14px 28px", borderRadius: 10, textDecoration: "none",
           }}>See how it works</a>
         </div>
 
         {/* Stats */}
-        <div style={{
-          display: "flex", justifyContent: "center", gap: 0,
-          marginTop: 80, borderTop: "1px solid var(--border)",
-          borderBottom: "1px solid var(--border)",
-        }}>
+        <div className="grid-stats" style={{ marginTop: 64, borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
           {STATS.map((s, i) => (
             <div key={s.label} style={{
-              flex: 1, maxWidth: 180, padding: "32px 24px", textAlign: "center",
+              flex: 1, padding: "28px 16px", textAlign: "center",
               borderRight: i < STATS.length - 1 ? "1px solid var(--border)" : "none",
+              borderBottom: "none",
             }}>
-              <p style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 36, color: "var(--accent)" }}>{s.value}</p>
-              <p style={{ fontSize: 13, color: "var(--text-muted)", marginTop: 4 }}>{s.label}</p>
+              <p style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(28px, 5vw, 40px)", color: "var(--accent)" }}>{s.value}</p>
+              <p style={{ fontSize: 12, color: "var(--text-muted)", marginTop: 4 }}>{s.label}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Five Gates */}
-      <section style={{ padding: "100px 60px", maxWidth: 1100, margin: "0 auto" }}>
-        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", color: "var(--accent)", textTransform: "uppercase", marginBottom: 16 }}>THE SYSTEM</p>
-        <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(32px, 4vw, 52px)", marginBottom: 60, maxWidth: 500, lineHeight: 1.1 }}>
+      <section style={{ padding: "80px 24px", maxWidth: 1000, margin: "0 auto" }}>
+        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", color: "var(--accent)", textTransform: "uppercase", marginBottom: 12 }}>THE SYSTEM</p>
+        <h2 className="section-title" style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(30px, 5vw, 52px)", marginBottom: 48, lineHeight: 1.1 }}>
           Five Gates to<br /><span style={{ color: "var(--accent)" }}>Brand Mastery.</span>
         </h2>
         <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
           {GATES.map((g, i) => (
-            <div key={g.num} style={{
-              display: "grid", gridTemplateColumns: "80px 1fr auto",
-              alignItems: "center", gap: 32,
-              padding: "28px 32px", borderRadius: 12,
+            <div key={g.num} className="gates-row" style={{
+              padding: "22px 20px", borderRadius: 12,
               background: i === 2 ? "var(--bg-card)" : "transparent",
               border: `1px solid ${i === 2 ? "var(--border-light)" : "transparent"}`,
               transition: "all 0.2s", cursor: "default",
             }}
-              onMouseOver={e => { (e.currentTarget as HTMLElement).style.background = "var(--bg-card)"; (e.currentTarget as HTMLElement).style.borderColor = "var(--border)"; }}
-              onMouseOut={e => { (e.currentTarget as HTMLElement).style.background = i === 2 ? "var(--bg-card)" : "transparent"; (e.currentTarget as HTMLElement).style.borderColor = i === 2 ? "var(--border-light)" : "transparent"; }}
+              onMouseOver={e => { (e.currentTarget as HTMLElement).style.background = "var(--bg-card)"; }}
+              onMouseOut={e => { (e.currentTarget as HTMLElement).style.background = i === 2 ? "var(--bg-card)" : "transparent"; }}
             >
-              <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 13, color: "var(--text-dim)" }}>{g.num}</span>
+              <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 12, color: "var(--text-dim)" }}>{g.num}</span>
               <div>
-                <h3 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 20, marginBottom: 6 }}>{g.title}</h3>
-                <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.6 }}>{g.desc}</p>
+                <h3 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 18, marginBottom: 4 }}>{g.title}</h3>
+                <p style={{ fontSize: 13, color: "var(--text-muted)", lineHeight: 1.6 }}>{g.desc}</p>
               </div>
-              <div style={{ display: "flex", gap: 6, flexWrap: "wrap", justifyContent: "flex-end" }}>
+              <div className="gates-tags" style={{ display: "flex", gap: 6, flexWrap: "wrap", justifyContent: "flex-end" }}>
                 {g.tags.map(t => (
-                  <span key={t} style={{
-                    fontSize: 9, fontWeight: 700, letterSpacing: "0.08em",
-                    padding: "4px 8px", borderRadius: 4,
-                    background: "var(--bg-card2)", border: "1px solid var(--border)",
-                    color: "var(--text-muted)",
-                  }}>{t}</span>
+                  <span key={t} style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.08em", padding: "4px 8px", borderRadius: 4, background: "var(--bg-card2)", border: "1px solid var(--border)", color: "var(--text-muted)" }}>{t}</span>
                 ))}
               </div>
             </div>
@@ -167,18 +178,18 @@ export default function LandingPage() {
       </section>
 
       {/* 3 Steps */}
-      <section id="how" style={{ padding: "100px 60px", background: "var(--bg-card)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", color: "var(--accent)", textTransform: "uppercase", marginBottom: 16 }}>HOW IT WORKS</p>
-          <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(32px, 4vw, 52px)", marginBottom: 60, lineHeight: 1.1 }}>
-            Build Your Business<br />in <span style={{ color: "var(--accent)" }}>3 Steps.</span>
+      <section id="how" style={{ padding: "80px 24px", background: "var(--bg-card)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
+        <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", color: "var(--accent)", textTransform: "uppercase", marginBottom: 12 }}>HOW IT WORKS</p>
+          <h2 className="section-title" style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(30px, 5vw, 52px)", marginBottom: 48, lineHeight: 1.1 }}>
+            Build in <span style={{ color: "var(--accent)" }}>3 Steps.</span>
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
+          <div className="steps-grid">
             {STEPS.map(s => (
-              <div key={s.num} style={{ background: "var(--bg-card2)", border: "1px solid var(--border)", borderRadius: 16, padding: 32 }}>
-                <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 48, color: "var(--accent)", opacity: 0.3 }}>{s.num}</span>
-                <h3 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 22, margin: "16px 0 12px" }}>{s.title}</h3>
-                <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.7 }}>{s.desc}</p>
+              <div key={s.num} style={{ background: "var(--bg-card2)", border: "1px solid var(--border)", borderRadius: 16, padding: "28px 24px" }}>
+                <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 42, color: "var(--accent)", opacity: 0.3 }}>{s.num}</span>
+                <h3 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 20, margin: "12px 0 10px" }}>{s.title}</h3>
+                <p style={{ fontSize: 13, color: "var(--text-muted)", lineHeight: 1.7 }}>{s.desc}</p>
               </div>
             ))}
           </div>
@@ -186,24 +197,18 @@ export default function LandingPage() {
       </section>
 
       {/* Ecosystem */}
-      <section style={{ padding: "100px 60px", maxWidth: 1100, margin: "0 auto" }}>
-        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", color: "var(--accent)", textTransform: "uppercase", marginBottom: 16 }}>THE PLATFORM</p>
-        <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(32px, 4vw, 52px)", marginBottom: 60, lineHeight: 1.1 }}>
+      <section style={{ padding: "80px 24px", maxWidth: 1000, margin: "0 auto" }}>
+        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", color: "var(--accent)", textTransform: "uppercase", marginBottom: 12 }}>THE PLATFORM</p>
+        <h2 className="section-title" style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(30px, 5vw, 52px)", marginBottom: 48, lineHeight: 1.1 }}>
           More than a tool —<br /><span style={{ color: "var(--accent)" }}>an ecosystem.</span>
         </h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+        <div className="eco-grid">
           {ECOSYSTEM.map(e => (
-            <div key={e.title} style={{
-              background: "var(--bg-card)", border: "1px solid var(--border)",
-              borderRadius: 14, padding: 28, transition: "border-color 0.2s",
-            }}
-              onMouseOver={e2 => ((e2.currentTarget as HTMLElement).style.borderColor = "var(--border-light)")}
-              onMouseOut={e2 => ((e2.currentTarget as HTMLElement).style.borderColor = "var(--border)")}
-            >
-              <div style={{ width: 36, height: 36, borderRadius: 8, background: "rgba(200,255,0,0.1)", border: "1px solid rgba(200,255,0,0.2)", marginBottom: 16, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <div style={{ width: 10, height: 10, borderRadius: "50%", background: "var(--accent)" }} />
+            <div key={e.title} style={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 14, padding: "24px 20px" }}>
+              <div style={{ width: 32, height: 32, borderRadius: 8, background: "rgba(200,255,0,0.1)", border: "1px solid rgba(200,255,0,0.2)", marginBottom: 14, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent)" }} />
               </div>
-              <h3 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 16, marginBottom: 8 }}>{e.title}</h3>
+              <h3 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 15, marginBottom: 8 }}>{e.title}</h3>
               <p style={{ fontSize: 13, color: "var(--text-muted)", lineHeight: 1.6 }}>{e.desc}</p>
             </div>
           ))}
@@ -211,21 +216,21 @@ export default function LandingPage() {
       </section>
 
       {/* Testimonials */}
-      <section style={{ padding: "100px 60px", background: "var(--bg-card)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", color: "var(--accent)", textTransform: "uppercase", marginBottom: 16 }}>SOCIAL PROOF</p>
-          <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(32px, 4vw, 48px)", marginBottom: 60, lineHeight: 1.1 }}>
+      <section style={{ padding: "80px 24px", background: "var(--bg-card)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
+        <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", color: "var(--accent)", textTransform: "uppercase", marginBottom: 12 }}>SOCIAL PROOF</p>
+          <h2 className="section-title" style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(30px, 5vw, 48px)", marginBottom: 48, lineHeight: 1.1 }}>
             Loved by Founders<br />&amp; Creators.
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+          <div className="testi-grid">
             {TESTIMONIALS.map(t => (
-              <div key={t.name} style={{ background: "var(--bg-card2)", border: "1px solid var(--border)", borderRadius: 16, padding: 28 }}>
-                <div style={{ display: "flex", gap: 2, marginBottom: 16 }}>
-                  {[...Array(t.stars)].map((_, i) => <span key={i} style={{ color: "var(--accent)", fontSize: 14 }}>★</span>)}
+              <div key={t.name} style={{ background: "var(--bg-card2)", border: "1px solid var(--border)", borderRadius: 16, padding: "24px 20px" }}>
+                <div style={{ display: "flex", gap: 2, marginBottom: 14 }}>
+                  {[...Array(t.stars)].map((_, i) => <span key={i} style={{ color: "var(--accent)", fontSize: 13 }}>★</span>)}
                 </div>
-                <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.7, marginBottom: 20, fontStyle: "italic" }}>"{t.quote}"</p>
+                <p style={{ fontSize: 13, color: "var(--text-muted)", lineHeight: 1.7, marginBottom: 18, fontStyle: "italic" }}>"{t.quote}"</p>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <div style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--accent)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 800, color: "#000" }}>
+                  <div style={{ width: 34, height: 34, borderRadius: "50%", background: "var(--accent)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#000", flexShrink: 0 }}>
                     {t.name.charAt(0)}
                   </div>
                   <div>
@@ -240,34 +245,26 @@ export default function LandingPage() {
       </section>
 
       {/* CTA */}
-      <section style={{ padding: "120px 24px", textAlign: "center" }}>
-        <div style={{
-          display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 24,
-          background: "rgba(200,255,0,0.08)", border: "1px solid rgba(200,255,0,0.2)",
-          borderRadius: 100, padding: "6px 16px",
-        }}>
-          <div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)" }} />
-          <span style={{ fontSize: 11, fontWeight: 700, color: "var(--accent)", letterSpacing: "0.08em" }}>READY WHEN YOU ARE</span>
-        </div>
-        <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(36px, 6vw, 72px)", lineHeight: 1.05, marginBottom: 16 }}>
+      <section style={{ padding: "100px 24px", textAlign: "center" }}>
+        <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(32px, 7vw, 68px)", lineHeight: 1.05, marginBottom: 16 }}>
           Your brand is one<br />decision away.
         </h2>
-        <p style={{ fontSize: 16, color: "var(--text-muted)", marginBottom: 48, lineHeight: 1.7 }}>
-          Every business starts with a brand.<br />Build it in minutes.
+        <p style={{ fontSize: "clamp(14px, 2.5vw, 16px)", color: "var(--text-muted)", marginBottom: 40, lineHeight: 1.7 }}>
+          Every business starts with a brand. Build it in minutes.
         </p>
         <Link href="/signup" style={{
           display: "inline-flex", alignItems: "center", gap: 8,
           background: "var(--accent)", color: "#000", fontWeight: 700,
-          fontSize: 17, padding: "18px 44px", borderRadius: 12, textDecoration: "none",
+          fontSize: "clamp(14px, 3vw, 17px)", padding: "16px 40px", borderRadius: 12, textDecoration: "none",
         }}>Start Building Free →</Link>
-        <p style={{ fontSize: 12, color: "var(--text-dim)", marginTop: 16 }}>No credit card required · Cancel anytime</p>
+        <p style={{ fontSize: 12, color: "var(--text-dim)", marginTop: 14 }}>No credit card required · Cancel anytime</p>
       </section>
 
       {/* Footer */}
-      <footer style={{ borderTop: "1px solid var(--border)", padding: "40px 60px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <footer style={{ borderTop: "1px solid var(--border)", padding: "32px 24px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
         <Logo size="sm" />
         <p style={{ fontSize: 12, color: "var(--text-dim)" }}>© 2025 RivhilAI. All rights reserved.</p>
-        <div style={{ display: "flex", gap: 24 }}>
+        <div style={{ display: "flex", gap: 20 }}>
           {["Privacy", "Terms", "Contact"].map(l => (
             <a key={l} href="#" style={{ fontSize: 12, color: "var(--text-muted)", textDecoration: "none" }}>{l}</a>
           ))}

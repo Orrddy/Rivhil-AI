@@ -2,9 +2,11 @@ import Sidebar from "@/components/Sidebar";
 
 export default function WorkspaceLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ display: "flex", height: "100vh", overflow: "hidden", background: "var(--bg)" }}>
+    <div className="workspace-wrap" style={{ background: "var(--bg)" }}>
       <Sidebar />
-      <main style={{ flex: 1, overflowY: "auto" }}>{children}</main>
+      <main className="workspace-main" style={{ paddingBottom: "env(safe-area-inset-bottom, 80px)" }}>
+        {children}
+      </main>
     </div>
   );
 }

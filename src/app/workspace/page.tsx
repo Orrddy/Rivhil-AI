@@ -49,17 +49,17 @@ export default function WorkspacePage() {
     <div style={{ display: "flex", height: "100%", overflow: "hidden" }}>
 
       {/* Main scrollable content */}
-      <div style={{ flex: 1, overflowY: "auto", padding: "48px 60px" }}>
+      <div style={{ flex: 1, overflowY: "auto", padding: "clamp(24px, 4vw, 48px) clamp(16px, 5vw, 60px)" }}>
 
         {/* Basics */}
-        <div style={{ marginBottom: 56 }}>
-          <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 36, marginBottom: 8 }}>
+        <div style={{ marginBottom: 48 }}>
+          <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(24px, 5vw, 36px)", marginBottom: 8 }}>
             Let's start with the basics.
           </h2>
           <p style={{ fontSize: 14, color: "var(--text-muted)", marginBottom: 32 }}>
             Tell us the core identifier of your upcoming brand venture.
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+          <div className="grid-2">
             <div>
               <label style={labelStyle}>BRAND NAME</label>
               <input value={brandName} onChange={e => setBrandName(e.target.value)}
@@ -78,14 +78,14 @@ export default function WorkspacePage() {
         </div>
 
         {/* Building */}
-        <div style={{ marginBottom: 56 }}>
-          <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 36, marginBottom: 8 }}>
+        <div style={{ marginBottom: 48 }}>
+          <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(24px, 5vw, 36px)", marginBottom: 8 }}>
             Tell us what you're building.
           </h2>
           <p style={{ fontSize: 14, color: "var(--text-muted)", marginBottom: 32 }}>
             The deeper the detail, the more accurate the AI generation will be.
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+          <div className="grid-2">
             {[
               { label: "THE PRODUCT", val: product, set: setProduct, placeholder: "What are you offering?" },
               { label: "TARGET AUDIENCE", val: audience, set: setAudience, placeholder: "Who are you selling to?" },
@@ -105,14 +105,14 @@ export default function WorkspacePage() {
         </div>
 
         {/* Personality */}
-        <div style={{ marginBottom: 56 }}>
-          <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 36, marginBottom: 8 }}>
+        <div style={{ marginBottom: 48 }}>
+          <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(24px, 5vw, 36px)", marginBottom: 8 }}>
             Define how your brand feels.
           </h2>
           <p style={{ fontSize: 14, color: "var(--text-muted)", marginBottom: 32 }}>
             Set the emotional tone for your visual and verbal identity.
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 300px", gap: 32 }}>
+          <div className="personality-grid">
             <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
               {SLIDERS.map(s => (
                 <div key={s.key}>
@@ -143,10 +143,10 @@ export default function WorkspacePage() {
         </div>
 
         {/* Logo style */}
-        <div style={{ marginBottom: 64 }}>
-          <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 36, marginBottom: 8 }}>Logo style.</h2>
+        <div style={{ marginBottom: 48 }}>
+          <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(24px, 5vw, 36px)", marginBottom: 8 }}>Logo style.</h2>
           <p style={{ fontSize: 14, color: "var(--text-muted)", marginBottom: 32 }}>Set the emotional tone for your logo.</p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, maxWidth: 500 }}>
+          <div className="onboard-logo-grid" style={{ maxWidth: 500 }}>
             {LOGO_STYLES.map(s => (
               <button key={s.id} onClick={() => setLogoStyle(s.id)} style={{
                 background: logoStyle === s.id ? "rgba(200,255,0,0.1)" : "var(--bg-card)",
